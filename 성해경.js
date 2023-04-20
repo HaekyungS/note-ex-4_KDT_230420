@@ -20,25 +20,26 @@ function isExampleTwo(first, second) {
   // 타입검사 실행하고 타입이 실패하면 에러발생이라 하셨는데,
   // typeof 로는 integer를 할 순 없다. 그래서 number로 작성함.
 
-  if(exampleOne(first, second, 'number')){
+  if (exampleOne(first, second, 'number')) {
 
 
-  let booleanResult;
+    let booleanResult;
 
-  // 두 매개변수를 비교하여 첫번째가 작으면 true~
-  if (first < second) {
-    booleanResult = true;
+    // 두 매개변수를 비교하여 첫번째가 작으면 true~
+    if (first < second) {
+      booleanResult = true;
+    } else {
+      booleanResult = false;
+    }
+
+    // 위에 booleanReault 가 불리언이 이면 booleanReault을 반환,
+    // 아니면 에러 반환
+    if (typeof (booleanResult) === 'boolean') {
+      return booleanResult;
+    } else {
+      return new Error("조건식이 boolean이 아니어서 리턴 하지 못했습니다.")
+    }
   } else {
-    booleanResult = false;
-  }
-
-  // 위에 booleanReault 가 불리언이 이면 booleanReault을 반환,
-  // 아니면 에러 반환
-  if (typeof (booleanResult) === 'boolean') {
-    return booleanResult;
-  } else {
-    return new Error("조건식이 boolean이 아니어서 리턴 하지 못했습니다.")
-  }}else{
     exampleOne(first, second, 'number')
   }
 
@@ -98,3 +99,26 @@ function exampleThree(array, functionOne, functionTwo) {
 
 console.log(exampleThree(basicData, exampleOne, isExampleTwo))
 
+// Q. 위 콘솔을 확인하여 함수 exampleThree()의 리턴값을 재조립된 배열을 만드시오
+
+// console.log(exampleThree(basicData, exampleOne, isExampleTwo).shift())
+// 콘솔로 위 함수에 shift() 를 적용하면 어떤식으로 나올지를 확인해봤다.
+// 결과값 : [4,6]
+
+// 새로운 배열을 만들 배열변수 생성.
+let newArray = [];
+
+// 배열의 인덱스마다 forEach 를 통해 함수 실행.
+exampleThree(basicData, exampleOne, isExampleTwo).forEach(element => {
+  // element가 배열로 나올 것이다.
+  // 예를 들면 첫번째 인덱스면 element는 [4,6]
+  // 그래서 한번 더 forEach 로 각 배열마다 실행.
+  element.forEach(e => {
+    // 위 element와 구분하려고 매개변수를 다르게 함.
+    // 해당 값을 newArray 배열에 담아준다.
+    newArray.push(e);
+  })
+});
+
+console.log(newArray)
+// 결과 [4,6,5,23,35,94,44,66]
